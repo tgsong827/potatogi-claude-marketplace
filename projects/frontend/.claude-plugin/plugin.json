@@ -1,0 +1,8 @@
+{
+  "name": "potatogi-plugin-user",
+  "description": "Potatogi project scope frontend plugin for Claude",
+  "version": "1.0.0",
+  "author": {
+    "name": "potatogi"
+  }
+}

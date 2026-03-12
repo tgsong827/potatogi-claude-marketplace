@@ -1,0 +1,18 @@
+{
+  "mcpServers": {
+    "potatogi-github": {
+      "type": "http",
+      "url": "https://api.githubcopilot.com/mcp",
+      "headers": {
+        "Authorization": "Bearer ${POTATOGI_GITHUB_MCP_PAT}"
+      }
+    },
+    "digglelens-github": {
+      "type": "http",
+      "url": "https://api.githubcopilot.com/mcp",
+      "headers": {
+        "Authorization": "Bearer ${DIGGLELENS_GITHUB_MCP_PAT}"
+      }
+    }
+  }
+}
