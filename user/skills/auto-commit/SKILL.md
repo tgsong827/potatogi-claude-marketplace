@@ -31,6 +31,15 @@ description: Use this skill whenever the user wants to make a git commit — whe
 - `.env`, `.env.*`, `.env.local`, `.env.*.local`
 - `*.secret`, `*credentials*`, `*.pem`, `*.key`, `*.p12`
 
+### 2.5단계: 보안 감사
+
+`agents/security-auditor.md`의 내용을 instructions으로 전달하여 Agent tool로 subagent를 spawn한다.
+
+subagent가 반환한 JSON 결과를 바탕으로:
+- `severity: "none"` → 3단계로 진행
+- `severity: "medium"` → AskUserQuestion으로 발견된 이슈 목록과 `summary`를 보여주고 진행 여부를 확인한다
+- `severity: "high"` → AskUserQuestion으로 발견된 이슈 목록과 `summary`를 보여주고 커밋을 강력히 권고하지 않는다. 사용자가 명시적으로 무시(ignore)를 선택한 경우에만 3단계로 진행한다
+
 ### 3단계: 커밋 메시지 생성
 
 스테이징된 변경사항(`git diff --staged`)과 최근 커밋 로그를 참고하여 메시지를 작성한다:
