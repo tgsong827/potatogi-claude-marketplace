@@ -12,6 +12,15 @@
       "name": "potatogi-plugin-user",
       "source": "./user/",
       "description": "Potatogi's user scope plugin for Claude Code"
+    },
+    {
+      "name": "superpower",
+      "description": "",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/obra/superpowers.git"
+      },
+      "homepage": "https://github.com/obra/superpowers"
     }
   ]
 }
