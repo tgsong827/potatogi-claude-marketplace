@@ -9,14 +9,6 @@
   },
   "plugins": [
     {
-      "name": "claude-plugin-official",
-      "source": {
-        "source": "url",
-        "url": "https://github.com/anthropics/claude-plugins-official.git"
-      },
-      "homepage": "https://github.com/anthropics/claude-plugins-official"
-    },
-    {
       "name": "potatogi-plugin-user",
       "source": "./user/",
       "description": "Potatogi's user scope plugin for Claude Code"
