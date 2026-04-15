@@ -1,32 +1,86 @@
-[cli.gh]
-name = "GitHub CLI"
-check = "gh --version"
-install = "brew install gh"
+[package-manager.brew]
+name = "Homebrew"
+check = "brew --version"
+install = "/bin/bash -c \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\""
 
-[cli.gh.setup]
+[font.meslo-lg-nerd-font]
+name = "MesloLGLDZ Nerd Font Mono"
+check = "brew list font-meslo-lg-nerd-font &>/dev/null && echo \"font-meslo-lg-nerd-font installed\""
+install = "brew install --cask font-meslo-lg-nerd-font"
+
+[font.d2coding-nerd-font]
+name = "D2CodingLigature Nerd Font Mono"
+check = "brew list font-d2coding-nerd-font &>/dev/null && echo \"font-d2coding-nerd-font installed\""
+install = "brew install --cask font-d2coding-nerd-font"
+
+[shell.zsh]
+name = "Zsh"
+check = "zsh --version"
+install = "brew install zsh"
+
+[shell.zsh-autosuggestions]
+name = "zsh-autosuggestions"
+check = "brew list zsh-autosuggestions &>/dev/null && echo \"zsh-autosuggestions $(brew info zsh-autosuggestions --json | grep -o '\"stable\":\"[^\"]*\"' | head -1 | cut -d'\"' -f4)\""
+install = "brew install zsh-autosuggestions"
+
+[shell.zsh-autosuggestions.setup]
 commands = [
-  'gh auth login',
+  'grep -q "zsh-autosuggestions.zsh" ~/.zshrc || echo ''source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh'' >> ~/.zshrc',
 ]
-description = "GitHub 인증 설정"
+description = "zshrc에 autosuggestions 활성화"
 
-[runtime.node]
-name = "Node.js"
-check = "node --version"
-install = "brew install node"
+[shell.zsh-syntax-highlighting]
+name = "zsh-syntax-highlighting"
+check = "brew list zsh-syntax-highlighting &>/dev/null && echo \"zsh-syntax-highlighting $(brew info zsh-syntax-highlighting --json | grep -o '\"stable\":\"[^\"]*\"' | head -1 | cut -d'\"' -f4)\""
+install = "brew install zsh-syntax-highlighting"
 
-[runtime.bun]
-name = "Bun"
-check = "bun --version"
-install = "brew install oven-sh/bun/bun"
-
-[runtime.bun.setup]
+[shell.zsh-syntax-highlighting.setup]
 commands = [
-  'echo ''export BUN_INSTALL="$HOME/.bun"'' >> ~/.zshrc',
-  'echo ''export PATH="$BUN_INSTALL/bin:$PATH"'' >> ~/.zshrc',
+  'grep -q "zsh-syntax-highlighting.zsh" ~/.zshrc || echo ''source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh'' >> ~/.zshrc',
 ]
-description = "BUN_INSTALL 환경변수 및 PATH 설정"
+description = "zshrc에 syntax-highlighting 활성화"
 
-[devtool.docker]
-name = "Docker"
-check = "docker --version"
-install = "brew install --cask docker"
+[shell.starship]
+name = "Starship"
+check = "starship --version"
+install = "brew install starship"
+
+[shell.starship.setup]
+commands = [
+  'grep -q "starship init zsh" ~/.zshrc || echo ''eval "$(starship init zsh)"'' >> ~/.zshrc',
+  'starship preset nerd-font-symbols -o ~/.config/starship.toml',
+]
+description = "zshrc에 Starship 초기화 추가 및 nerd-font-symbols preset 적용"
+
+# [cli.gh]
+# name = "GitHub CLI"
+# check = "gh --version"
+# install = "brew install gh"
+#
+# [cli.gh.setup]
+# commands = [
+#   'gh auth login',
+# ]
+# description = "GitHub 인증 설정"
+#
+# [runtime.node]
+# name = "Node.js"
+# check = "node --version"
+# install = "brew install node"
+#
+# [runtime.bun]
+# name = "Bun"
+# check = "bun --version"
+# install = "brew install oven-sh/bun/bun"
+#
+# [runtime.bun.setup]
+# commands = [
+#   'echo ''export BUN_INSTALL="$HOME/.bun"'' >> ~/.zshrc',
+#   'echo ''export PATH="$BUN_INSTALL/bin:$PATH"'' >> ~/.zshrc',
+# ]
+# description = "BUN_INSTALL 환경변수 및 PATH 설정"
+#
+# [devtool.docker]
+# name = "Docker"
+# check = "docker --version"
+# install = "brew install --cask docker"
