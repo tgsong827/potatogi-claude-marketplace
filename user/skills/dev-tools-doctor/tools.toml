@@ -1,7 +1,26 @@
+# =============================================================================
+# 1. Package Manager
+# =============================================================================
+
 [package-manager.brew]
 name = "Homebrew"
 check = "brew --version"
 install = "/bin/bash -c \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\""
+
+[package-manager.brew.setup]
+commands = [
+  'grep -q "brew shellenv" ~/.zshrc || echo ''eval "$(/opt/homebrew/bin/brew shellenv)"'' >> ~/.zshrc',
+]
+description = "zshrc에 Homebrew PATH 설정 (Apple Silicon)"
+
+[package-manager.pnpm]
+name = "pnpm"
+check = "pnpm --version"
+install = "brew install pnpm"
+
+# =============================================================================
+# 2. Font
+# =============================================================================
 
 [font.meslo-lg-nerd-font]
 name = "MesloLGLDZ Nerd Font Mono"
@@ -12,6 +31,10 @@ install = "brew install --cask font-meslo-lg-nerd-font"
 name = "D2CodingLigature Nerd Font Mono"
 check = "brew list font-d2coding-nerd-font &>/dev/null && echo \"font-d2coding-nerd-font installed\""
 install = "brew install --cask font-d2coding-nerd-font"
+
+# =============================================================================
+# 3. Shell
+# =============================================================================
 
 [shell.zsh]
 name = "Zsh"
@@ -52,35 +75,183 @@ commands = [
 ]
 description = "zshrc에 Starship 초기화 추가 및 nerd-font-symbols preset 적용"
 
-# [cli.gh]
-# name = "GitHub CLI"
-# check = "gh --version"
-# install = "brew install gh"
-#
-# [cli.gh.setup]
-# commands = [
-#   'gh auth login',
-# ]
-# description = "GitHub 인증 설정"
-#
-# [runtime.node]
-# name = "Node.js"
-# check = "node --version"
-# install = "brew install node"
-#
-# [runtime.bun]
-# name = "Bun"
-# check = "bun --version"
-# install = "brew install oven-sh/bun/bun"
-#
-# [runtime.bun.setup]
-# commands = [
-#   'echo ''export BUN_INSTALL="$HOME/.bun"'' >> ~/.zshrc',
-#   'echo ''export PATH="$BUN_INSTALL/bin:$PATH"'' >> ~/.zshrc',
-# ]
-# description = "BUN_INSTALL 환경변수 및 PATH 설정"
-#
-# [devtool.docker]
-# name = "Docker"
-# check = "docker --version"
-# install = "brew install --cask docker"
+# =============================================================================
+# 4. Runtime / Language
+# =============================================================================
+
+[runtime.fnm]
+name = "fnm"
+check = "fnm --version"
+install = "brew install fnm"
+
+[runtime.fnm.setup]
+commands = [
+  'grep -q "fnm env" ~/.zshrc || echo ''eval "$(fnm env --use-on-cd)"'' >> ~/.zshrc',
+]
+description = "zshrc에 fnm 초기화 추가 (디렉토리 진입 시 자동 버전 전환)"
+
+[runtime.node]
+name = "Node.js"
+check = "node --version"
+install = "fnm install --lts"
+
+[runtime.bun]
+name = "Bun"
+check = "bun --version"
+install = "brew install oven-sh/bun/bun"
+
+[runtime.rust]
+name = "Rust"
+check = "rustc --version"
+install = "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y"
+
+[runtime.rust.setup]
+commands = [
+  'grep -q ".cargo/env" ~/.zshrc || echo ''source "$HOME/.cargo/env"'' >> ~/.zshrc',
+]
+description = "zshrc에 Cargo PATH 설정"
+
+[runtime.python]
+name = "Python"
+check = "python3 --version"
+install = "brew install python"
+
+# =============================================================================
+# 5. CLI
+# =============================================================================
+
+# -- general --
+
+[cli.gh]
+name = "GitHub CLI"
+check = "gh --version"
+install = "brew install gh"
+
+[cli.direnv]
+name = "direnv"
+check = "direnv version"
+install = "brew install direnv"
+
+[cli.direnv.setup]
+commands = [
+  'grep -q "direnv hook zsh" ~/.zshrc || echo ''eval "$(direnv hook zsh)"'' >> ~/.zshrc',
+]
+description = "zshrc에 direnv hook 추가"
+
+[cli.telnet]
+name = "telnet"
+check = "command -v telnet &>/dev/null && echo \"telnet installed\""
+install = "brew install telnet"
+
+[cli.coreutils]
+name = "coreutils"
+check = "brew list coreutils &>/dev/null && echo \"coreutils installed\""
+install = "brew install coreutils"
+
+# -- infra --
+
+[cli.awscli]
+name = "AWS CLI"
+check = "aws --version"
+install = "brew install awscli"
+
+[cli.kubectl]
+name = "kubectl"
+check = "kubectl version --client"
+install = "brew install kubectl"
+
+[cli.kubectx]
+name = "kubectx"
+check = "kubectx --version"
+install = "brew install kubectx"
+
+# -- static site --
+
+[cli.zola]
+name = "Zola"
+check = "zola --version"
+install = "brew install zola"
+
+# =============================================================================
+# 6. AI
+# =============================================================================
+
+[ai.claude]
+name = "Claude Code"
+check = "claude --version"
+install = "npm install -g @anthropic-ai/claude-code"
+
+[ai.gemini]
+name = "Gemini CLI"
+check = "gemini --version"
+install = "npm install -g @google/gemini-cli"
+
+# =============================================================================
+# 7. App
+# =============================================================================
+
+# -- ide --
+
+[app.zed]
+name = "Zed"
+check = "[ -d \"/Applications/Zed.app\" ] && echo \"Zed installed\""
+install = "brew install --cask zed"
+
+# -- terminal --
+
+[app.cmux]
+name = "cmux"
+check = "[ -d \"/Applications/cmux.app\" ] && echo \"cmux installed\""
+install = "brew install --cask cmux"
+
+# -- container --
+
+[app.docker]
+name = "Docker"
+check = "docker --version"
+install = "brew install --cask docker"
+
+# -- api --
+
+[app.postman]
+name = "Postman"
+check = "[ -d \"/Applications/Postman.app\" ] && echo \"Postman installed\""
+install = "brew install --cask postman"
+
+# -- database --
+
+[app.dbeaver]
+name = "DBeaver"
+check = "[ -d \"/Applications/DBeaver.app\" ] && echo \"DBeaver installed\""
+install = "brew install --cask dbeaver-community"
+
+[app.redis-insight]
+name = "Redis Insight"
+check = "[ -d \"/Applications/Redis Insight.app\" ] && echo \"Redis Insight installed\""
+install = "brew install --cask redisinsight"
+
+# -- k8s --
+
+[app.lens]
+name = "Lens"
+check = "[ -d \"/Applications/Lens.app\" ] && echo \"Lens installed\""
+install = "brew install --cask lens"
+
+# =============================================================================
+# 8. Cargo Dev Tools (Rust 의존)
+# =============================================================================
+
+[cargo.cargo-watch]
+name = "cargo-watch"
+check = "cargo watch --version"
+install = "cargo install cargo-watch"
+
+[cargo.cargo-fleet]
+name = "cargo-fleet"
+check = "fleet --version"
+install = "cargo install fleet-rs"
+
+[cargo.sea-orm-cli]
+name = "sea-orm-cli"
+check = "sea-orm-cli --version"
+install = "cargo install sea-orm-cli"
