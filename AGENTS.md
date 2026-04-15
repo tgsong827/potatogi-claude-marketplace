@@ -27,7 +27,7 @@ potatogi-claude-marketplace/
 
 | Type   | Items                                                    |
 |--------|----------------------------------------------------------|
-| Skills | auto-commit, auto-push, mac-uninstaller, setup-format-lint, skill-creator |
+| Skills | auto-commit, auto-push, dev-tools-doctor, mac-uninstaller, setup-format-lint, skill-creator |
 | Hooks  | telegram-guard (SessionStart), post-commit-reminder (PostToolUse:Bash) |
 | Agents | security-auditor                                         |
 | MCP    | willog-atlassian                                         |
