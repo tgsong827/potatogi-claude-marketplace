@@ -18,6 +18,11 @@ name = "pnpm"
 check = "pnpm --version"
 install = "brew install pnpm"
 
+[package-manager.yarn]
+name = "Yarn"
+check = "yarn --version"
+install = "brew install yarn"
+
 # =============================================================================
 # 2. Font
 # =============================================================================
