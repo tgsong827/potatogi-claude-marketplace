@@ -173,14 +173,79 @@ gh issue create \
 
 - **성공** (`gh issue create` 가 URL을 stdout으로 출력):
   1. 임시 파일 삭제: `rm "$DRAFT_PATH"`
-  2. 사용자에게 URL 한 줄 출력: `"Issue 생성됨: <URL>"`
-  3. 종료.
+  2. URL을 변수(`ISSUE_URL`)에 보관하고 6단계로 진행.
 - **실패** (비정상 exit code):
   1. 임시 파일 **유지**.
   2. 사용자에게 다음 정보 출력:
      - stderr 전체
      - `"Draft는 다음 경로에 유지됨: <DRAFT_PATH>"`
-  3. 종료.
+  3. 종료 (6단계 진행하지 않음).
+
+### 6단계: Organization Project 연결 (선택)
+
+Issue가 성공적으로 생성되면 상위 organization의 project에 연결할 기회를 제공한다. Personal repo이거나 연결 가능한 project가 없으면 이 단계는 자동으로 skip한다. 어떤 실패가 발생하더라도 issue 자체는 이미 생성되었으므로 **전체를 실패로 처리하지 않는다**.
+
+#### 6.1 Organization 감지
+
+repo 소유자 타입을 확인한다:
+
+```bash
+OWNER=$(gh repo view --json owner --jq '.owner.login')
+OWNER_TYPE=$(gh api "users/$OWNER" --jq '.type' 2>/dev/null)
+```
+
+- `OWNER_TYPE == "Organization"` 이면 6.2로 진행.
+- 그 외 (User, 조회 실패 등) 이면 6.5의 최종 출력으로 바로 건너뛴다.
+
+#### 6.2 Organization projects 조회
+
+```bash
+gh project list --owner "$OWNER" --format json
+```
+
+- 결과의 `projects` 배열이 비어있으면 6.5로 skip.
+- 명령이 실패하면 (권한 없음, network 등) 경고 한 줄 출력 후 6.5로 skip:
+  - `"⚠️  Organization projects 조회 실패: <stderr 한 줄>"`
+
+각 project의 `number`, `title`, `url` 을 보관한다.
+
+#### 6.3 프로젝트 선택
+
+`AskUserQuestion` 으로 연결할 project를 선택한다. 모든 경우에 "연결하지 않음" 옵션이 포함되어야 하며, 이 옵션이 선택되면 6.5로 진행한다.
+
+**Project 수 ≤ 3:**
+- **question**: `"생성한 issue를 어떤 project에 연결할까요?"`
+- **header**: `"Project 연결"`
+- **옵션**: 각 project의 `title` (최대 3개) + `"연결하지 않음"` (총 최대 4개)
+
+**Project 수 > 3:**
+- 첫 질문:
+  - **question**: `"생성한 issue를 어떤 project에 연결할까요?"`
+  - **header**: `"Project 연결"`
+  - **옵션 1-2**: 상위 2개 project의 `title`
+  - **옵션 3**: `"직접 선택"`
+  - **옵션 4**: `"연결하지 않음"`
+- "직접 선택" 시: 전체 project `title` 목록을 채팅창에 번호와 함께 출력한 뒤 일반 텍스트 질문으로 사용자의 선택(번호 또는 title)을 받는다. 응답이 목록과 매칭되지 않으면 재질문한다. 사용자가 "취소" 등 중단 의사를 보이면 연결을 skip하고 6.5로 진행한다.
+
+#### 6.4 연결 실행
+
+선택된 project(`PROJECT_NUMBER`, `PROJECT_TITLE`)에 issue를 연결한다:
+
+```bash
+gh project item-add <PROJECT_NUMBER> --owner "$OWNER" --url "$ISSUE_URL"
+```
+
+- **성공**: 6.5로 진행.
+- **실패**: 경고 한 줄 출력하고 6.5로 진행 (issue 자체는 생성 성공이므로 전체 실패 처리 안 함):
+  - `"⚠️  Project 연결 실패: <stderr 한 줄>"`
+
+#### 6.5 최종 출력
+
+다음 내용을 순서대로 출력하고 종료한다.
+
+- 항상 출력: `"Issue 생성됨: <ISSUE_URL>"`
+- 6.4에서 연결 성공 시 추가: `"Project에 연결됨: <PROJECT_TITLE>"`
+- 6.2/6.3/6.4에서 경고가 발생했다면 그 경고 문구는 이 최종 출력 **이전**에 이미 출력된 상태.
 
 ## 오류 처리
 
@@ -197,5 +262,10 @@ gh issue create \
 | 2 | 전체 template 파싱 실패 | 종료 |
 | 4 | 사용자가 "취소" 선택 | 조용히 종료 (임시 파일 미생성) |
 | 5 | `gh issue create` 실패 | stderr + 임시 파일 경로 출력 |
+| 6 | Personal repo (owner.type != Organization) | 경고 없이 skip, URL만 출력 |
+| 6 | `gh project list` 실패 / 권한 없음 | 경고 출력 + URL 출력, 전체 실패 처리 안 함 |
+| 6 | Organization에 project 없음 | 경고 없이 skip, URL만 출력 |
+| 6 | 사용자가 "연결하지 않음" 선택 | URL만 출력 |
+| 6 | `gh project item-add` 실패 | 경고 출력 + URL 출력, 전체 실패 처리 안 함 |
 
 Review 루프(3단계) 중 사용자가 명시적으로 취소(예: "그만", "취소")하는 경우에도 조용히 종료한다.
