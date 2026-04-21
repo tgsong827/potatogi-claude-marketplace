@@ -140,8 +140,62 @@ Assignee: @me
 
 ### 5단계: Issue 생성
 
-_(Task 6에서 작성)_
+#### 5.1 임시 파일 준비
+
+repo 루트(`git rev-parse --show-toplevel`) 아래 `.tmp/issue-shaping/` 디렉토리를 생성하고, draft body를 타임스탬프가 붙은 파일로 저장한다:
+
+```bash
+REPO_ROOT=$(git rev-parse --show-toplevel)
+mkdir -p "$REPO_ROOT/.tmp/issue-shaping"
+DRAFT_PATH="$REPO_ROOT/.tmp/issue-shaping/draft-$(date +%Y%m%d-%H%M%S).md"
+```
+
+`Write` 도구로 `DRAFT_PATH` 에 body 내용을 저장한다 (title 라인과 meta 라인은 제외, body만).
+
+> **주의**: `.tmp/` 디렉토리가 `.gitignore` 에 포함되어 있지 않을 수 있다. 이 skill은 `.gitignore` 를 자동 수정하지 않는다. 프로젝트 owner가 `.tmp/` 를 gitignore에 추가하는 것을 권장한다 (경고로 한 번만 안내).
+
+#### 5.2 Issue 생성 명령 실행
+
+다음 명령을 실행한다:
+
+```bash
+gh issue create \
+  --title "<생성된 title>" \
+  --body-file "$DRAFT_PATH" \
+  --label "<label1>,<label2>,..." \
+  --assignee @me
+```
+
+- label이 비어있으면 `--label` 플래그 자체를 생략한다.
+- title에 쌍따옴표가 포함된 경우 쉘 escape를 적용한다.
+
+#### 5.3 결과 처리
+
+- **성공** (`gh issue create` 가 URL을 stdout으로 출력):
+  1. 임시 파일 삭제: `rm "$DRAFT_PATH"`
+  2. 사용자에게 URL 한 줄 출력: `"Issue 생성됨: <URL>"`
+  3. 종료.
+- **실패** (비정상 exit code):
+  1. 임시 파일 **유지**.
+  2. 사용자에게 다음 정보 출력:
+     - stderr 전체
+     - `"Draft는 다음 경로에 유지됨: <DRAFT_PATH>"`
+  3. 종료.
 
 ## 오류 처리
 
-_(Task 6에서 작성)_
+각 단계에서 아래 표에 해당하는 상황이 발생하면 명시된 방식으로 처리한다.
+
+| 단계 | 상황 | 처리 |
+|---|---|---|
+| 1 | git repo 아님 | 안내 후 종료 |
+| 1 | GitHub remote 아님 | 안내 후 종료 |
+| 1 | gh CLI 인증 미완 | "`gh auth login`" 안내 후 종료 |
+| 1 | gh CLI 미설치 | "`dev-tools-doctor` 사용" 안내 후 종료 |
+| 1 | Template 0개 | "Template 추가 후 재시도" 안내 후 종료 |
+| 2 | 일부 template 파싱 실패 | 해당 template 제외 + 경고 |
+| 2 | 전체 template 파싱 실패 | 종료 |
+| 4 | 사용자가 "취소" 선택 | 조용히 종료 (임시 파일 미생성) |
+| 5 | `gh issue create` 실패 | stderr + 임시 파일 경로 출력 |
+
+Review 루프(3단계) 중 사용자가 명시적으로 취소(예: "그만", "취소")하는 경우에도 조용히 종료한다.
