@@ -9,7 +9,7 @@ install = "/bin/bash -c \"$(curl -fsSL https://raw.githubusercontent.com/Homebre
 
 [package-manager.brew.setup]
 commands = [
-  'grep -q "brew shellenv" ~/.zshrc || echo ''eval "$(/opt/homebrew/bin/brew shellenv)"'' >> ~/.zshrc',
+  "grep -q \"brew shellenv\" ~/.zshrc || echo 'eval \"$(/opt/homebrew/bin/brew shellenv)\"' >> ~/.zshrc",
 ]
 description = "zshrc에 Homebrew PATH 설정 (Apple Silicon)"
 
@@ -53,7 +53,7 @@ install = "brew install zsh-autosuggestions"
 
 [shell.zsh-autosuggestions.setup]
 commands = [
-  'grep -q "zsh-autosuggestions.zsh" ~/.zshrc || echo ''source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh'' >> ~/.zshrc',
+  "grep -q \"zsh-autosuggestions.zsh\" ~/.zshrc || echo 'source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh' >> ~/.zshrc",
 ]
 description = "zshrc에 autosuggestions 활성화"
 
@@ -64,7 +64,7 @@ install = "brew install zsh-syntax-highlighting"
 
 [shell.zsh-syntax-highlighting.setup]
 commands = [
-  'grep -q "zsh-syntax-highlighting.zsh" ~/.zshrc || echo ''source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh'' >> ~/.zshrc',
+  "grep -q \"zsh-syntax-highlighting.zsh\" ~/.zshrc || echo 'source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh' >> ~/.zshrc",
 ]
 description = "zshrc에 syntax-highlighting 활성화"
 
@@ -75,8 +75,8 @@ install = "brew install starship"
 
 [shell.starship.setup]
 commands = [
-  'grep -q "starship init zsh" ~/.zshrc || echo ''eval "$(starship init zsh)"'' >> ~/.zshrc',
-  'starship preset nerd-font-symbols -o ~/.config/starship.toml',
+  "grep -q \"starship init zsh\" ~/.zshrc || echo 'eval \"$(starship init zsh)\"' >> ~/.zshrc",
+  "starship preset nerd-font-symbols -o ~/.config/starship.toml",
 ]
 description = "zshrc에 Starship 초기화 추가 및 nerd-font-symbols preset 적용"
 
@@ -91,7 +91,7 @@ install = "brew install fnm"
 
 [runtime.fnm.setup]
 commands = [
-  'grep -q "fnm env" ~/.zshrc || echo ''eval "$(fnm env --use-on-cd)"'' >> ~/.zshrc',
+  "grep -q \"fnm env\" ~/.zshrc || echo 'eval \"$(fnm env --use-on-cd)\"' >> ~/.zshrc",
 ]
 description = "zshrc에 fnm 초기화 추가 (디렉토리 진입 시 자동 버전 전환)"
 
@@ -112,7 +112,7 @@ install = "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- 
 
 [runtime.rust.setup]
 commands = [
-  'grep -q ".cargo/env" ~/.zshrc || echo ''source "$HOME/.cargo/env"'' >> ~/.zshrc',
+  "grep -q \".cargo/env\" ~/.zshrc || echo 'source \"$HOME/.cargo/env\"' >> ~/.zshrc",
 ]
 description = "zshrc에 Cargo PATH 설정"
 
@@ -139,7 +139,7 @@ install = "brew install direnv"
 
 [cli.direnv.setup]
 commands = [
-  'grep -q "direnv hook zsh" ~/.zshrc || echo ''eval "$(direnv hook zsh)"'' >> ~/.zshrc',
+  "grep -q \"direnv hook zsh\" ~/.zshrc || echo 'eval \"$(direnv hook zsh)\"' >> ~/.zshrc",
 ]
 description = "zshrc에 direnv hook 추가"
 
