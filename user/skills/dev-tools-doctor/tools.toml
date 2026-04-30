@@ -191,6 +191,11 @@ name = "Gemini CLI"
 check = "gemini --version"
 install = "npm install -g @google/gemini-cli"
 
+[ai.codex]
+name = "Codex CLI"
+check = "codex --version"
+install = "npm install -g @openai/codex"
+
 # =============================================================================
 # 7. App
 # =============================================================================
