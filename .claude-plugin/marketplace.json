@@ -21,6 +21,15 @@
         "url": "https://github.com/obra/superpowers.git"
       },
       "homepage": "https://github.com/obra/superpowers"
+    },
+    {
+      "name": "codex",
+      "description": "",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/openai/codex-plugin-cc.git"
+      },
+      "homepage": "https://github.com/openai/codex-plugin-cc"
     }
   ]
 }
