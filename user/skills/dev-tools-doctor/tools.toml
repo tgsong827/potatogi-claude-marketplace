@@ -247,6 +247,13 @@ name = "Lens"
 check = "[ -d \"/Applications/Lens.app\" ] && echo \"Lens installed\""
 install = "brew install --cask lens"
 
+# -- network --
+
+[app.tailscale]
+name = "Tailscale"
+check = "tailscale --version"
+install = "brew install --cask tailscale"
+
 # =============================================================================
 # 8. Cargo Dev Tools (Rust 의존)
 # =============================================================================
