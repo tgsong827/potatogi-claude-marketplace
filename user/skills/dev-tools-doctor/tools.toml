@@ -214,6 +214,15 @@ name = "cmux"
 check = "[ -d \"/Applications/cmux.app\" ] && echo \"cmux installed\""
 install = "brew install --cask cmux"
 
+[app.cmux.setup]
+commands = [
+  "mkdir -p \"$HOME/Library/Application Support/com.cmuxterm.app\"",
+  "touch \"$HOME/Library/Application Support/com.cmuxterm.app/config.ghostty\"",
+  "grep -q \"^font-family = MesloLGLDZ\" \"$HOME/Library/Application Support/com.cmuxterm.app/config.ghostty\" || echo 'font-family = MesloLGLDZ Nerd Font Mono + D2CodingLigature Nerd Font Mono' >> \"$HOME/Library/Application Support/com.cmuxterm.app/config.ghostty\"",
+  "grep -q \"^font-size = \" \"$HOME/Library/Application Support/com.cmuxterm.app/config.ghostty\" || echo 'font-size = 14' >> \"$HOME/Library/Application Support/com.cmuxterm.app/config.ghostty\"",
+]
+description = "cmux는 Ghostty 기반이며 ~/Library/Application Support/com.cmuxterm.app/config.ghostty를 읽음. 폰트 설정 추가 (MesloLGLDZ + D2CodingLigature Nerd Font, size 14)"
+
 # -- container --
 
 [app.docker]
