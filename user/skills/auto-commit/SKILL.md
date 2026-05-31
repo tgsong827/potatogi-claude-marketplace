@@ -37,11 +37,37 @@ description: Use this skill whenever the user wants to make a git commit — whe
 - `.env`, `.env.*`, `.env.local`, `.env.*.local`
 - `*.secret`, `*credentials*`, `*.pem`, `*.key`, `*.p12`
 
-### 2.5단계: 보안 감사
+### 2.5단계: 보안 감사 (조건부)
 
-`agents/security-auditor.md`의 내용을 instructions으로 전달하여 Agent tool로 subagent를 spawn한다.
+성능을 위해 **2단계 구조**로 동작한다. 작거나 저위험인 변경에서는 무거운 subagent를 띄우지 않는다.
 
-subagent가 반환한 JSON 결과를 바탕으로:
+#### (A) 고속 시크릿 스캔 — 항상 수행, subagent 불필요
+
+`git diff --staged` 의 추가 라인(`+`로 시작)에 대해서만 아래 고위험 시크릿 패턴을 직접 grep으로 검사한다 (메인 에이전트가 직접, 별도 subagent 없음):
+
+- AWS access key: `AKIA[0-9A-Z]{16}`
+- GitHub token: `gh[pousr]_[A-Za-z0-9]{20,}`
+- Google API key: `AIza[0-9A-Za-z_-]{35}`
+- Stripe live key: `sk_live_[0-9A-Za-z]{20,}`
+- Slack token: `xox[baprs]-[0-9A-Za-z-]{10,}`
+- Private key 블록: `-----BEGIN [A-Z ]*PRIVATE KEY-----`
+- 자격증명 포함 connection string: `[a-z][a-z0-9+.-]*://[^/\s:@]+:[^/\s:@]+@`
+
+하나라도 매칭되면 **high**로 간주하고, 매칭된 파일/라인 목록과 함께 AskUserQuestion으로 진행 여부를 확인한다 (아래 (C)의 high 처리와 동일). 플레이스홀더(`your-api-key-here`, `<YOUR_TOKEN>`, `example`, `xxx`)는 무시한다.
+
+#### (B) 심층 감사 (subagent) — 아래 조건 중 하나라도 충족할 때만 실행
+
+`git diff --staged --numstat` 로 변경 규모를 확인한 뒤 판단한다:
+
+- 스테이징된 **추가 라인 총합이 50줄 초과**, 또는
+- 위험 소스 확장자 파일이 포함됨: `.js .jsx .ts .tsx .py .go .java .rb .php .rs .c .cpp .cs .sh .sql`
+
+위 조건에 **해당하지 않으면** (문서/설정 소규모 변경 등) 심층 감사를 건너뛰고 바로 3단계로 진행한다. 이때 "보안 감사: 저위험 변경으로 판단하여 고속 스캔만 수행했습니다."를 한 줄 출력한다.
+
+조건을 충족하면 `Agent` 도구로 `subagent_type: "potatogi-plugin-user:security-auditor"`, `model: "haiku"` 로 spawn한다. (파일을 읽어 instructions로 전달하지 말 것 — 등록된 에이전트를 직접 사용한다. 속도를 위해 모델은 haiku로 고정한다.)
+
+#### (C) 결과 처리 (A 또는 B에서 이슈 발견 시)
+
 - `severity: "none"` → 3단계로 진행
 - `severity: "medium"` → AskUserQuestion으로 발견된 이슈 목록과 `summary`를 보여주고 진행 여부를 확인한다
 - `severity: "high"` → AskUserQuestion으로 발견된 이슈 목록과 `summary`를 보여주고 커밋을 강력히 권고하지 않는다. 사용자가 명시적으로 무시(ignore)를 선택한 경우에만 3단계로 진행한다
