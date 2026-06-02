@@ -42,6 +42,16 @@
       "homepage": "https://github.com/Lum1104/Understand-Anything"
     },
     {
+      "name": "agentmemory",
+      "description": "agentmemory",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/rohitg00/agentmemory.git",
+        "path": "plugin"
+      },
+      "homepage": "https://github.com/rohitg00/agentmemory"
+    },
+    {
       "name": "codex",
       "description": "codex",
       "source": {
