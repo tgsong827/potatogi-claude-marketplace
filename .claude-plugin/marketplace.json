@@ -14,6 +14,15 @@
       "description": "Potatogi's user scope plugin for Claude Code"
     },
     {
+      "name": "karpathy-guidelines",
+      "description": "karpathy-guidelines",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/multica-ai/andrej-karpathy-skills.git"
+      },
+      "homepage": "https://github.com/multica-ai/andrej-karpathy-skills"
+    },
+    {
       "name": "superpower",
       "description": "",
       "source": {
