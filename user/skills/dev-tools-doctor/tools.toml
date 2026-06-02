@@ -261,7 +261,7 @@ install = "brew install --cask lens"
 [app.tailscale]
 name = "Tailscale"
 check = "tailscale --version"
-install = "brew install --cask tailscale"
+install = "brew install tailscale"
 
 # =============================================================================
 # 8. Cargo Dev Tools (Rust 의존)
