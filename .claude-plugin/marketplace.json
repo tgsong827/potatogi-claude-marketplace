@@ -24,7 +24,7 @@
     },
     {
       "name": "superpower",
-      "description": "",
+      "description": "superpower",
       "source": {
         "source": "url",
         "url": "https://github.com/obra/superpowers.git"
@@ -32,8 +32,18 @@
       "homepage": "https://github.com/obra/superpowers"
     },
     {
+      "name": "understand-anything",
+      "description": "understand-anything",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/Lum1104/Understand-Anything.git",
+        "path": "understand-anything-plugin"
+      },
+      "homepage": "https://github.com/Lum1104/Understand-Anything"
+    },
+    {
       "name": "codex",
-      "description": "",
+      "description": "codex",
       "source": {
         "source": "url",
         "url": "https://github.com/openai/codex-plugin-cc.git"
