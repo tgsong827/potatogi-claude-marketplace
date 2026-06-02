@@ -196,6 +196,11 @@ name = "Codex CLI"
 check = "codex --version"
 install = "npm install -g @openai/codex"
 
+[ai.agentmemory]
+name = "agentmemory"
+check = "agentmemory --version"
+install = "npm install -g @agentmemory/agentmemory"
+
 # =============================================================================
 # 7. App
 # =============================================================================
