@@ -117,16 +117,22 @@ description = "zshrc에 fnm 초기화 추가 (디렉토리 진입 시 자동 버
 name = "Node.js"
 check = "node --version"
 install = "fnm install --lts"
+latest = "fnm ls-remote --lts | tail -1 | grep -oE 'v[0-9]+\\.[0-9]+\\.[0-9]+' | head -1"
+update = "fnm install --lts"
 
 [runtime.bun]
 name = "Bun"
 check = "bun --version"
 install = "brew install oven-sh/bun/bun"
+latest = "brew info bun --json=v2 | jq -r '.formulae[0].versions.stable'"
+update = "brew upgrade oven-sh/bun/bun"
 
 [runtime.rust]
 name = "Rust"
 check = "rustc --version"
 install = "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y"
+latest = "rustup check | grep -i '^stable' | grep -oE '[0-9]+\\.[0-9]+\\.[0-9]+' | tail -1"
+update = "rustup update stable"
 
 [runtime.rust.setup]
 commands = [
@@ -235,21 +241,29 @@ update = "brew upgrade zola"
 name = "Claude Code"
 check = "claude --version"
 install = "npm install -g @anthropic-ai/claude-code"
+latest = "npm view @anthropic-ai/claude-code version"
+update = "npm install -g @anthropic-ai/claude-code@latest"
 
 [ai.gemini]
 name = "Gemini CLI"
 check = "gemini --version"
 install = "npm install -g @google/gemini-cli"
+latest = "npm view @google/gemini-cli version"
+update = "npm install -g @google/gemini-cli@latest"
 
 [ai.codex]
 name = "Codex CLI"
 check = "codex --version"
 install = "npm install -g @openai/codex"
+latest = "npm view @openai/codex version"
+update = "npm install -g @openai/codex@latest"
 
 [ai.agentmemory]
 name = "agentmemory"
 check = "agentmemory --version"
 install = "npm install -g @agentmemory/agentmemory"
+latest = "npm view @agentmemory/agentmemory version"
+update = "npm install -g @agentmemory/agentmemory@latest"
 
 # =============================================================================
 # 7. App
@@ -406,8 +420,12 @@ install = "echo 'KakaoTalk은 Mac App Store에서 직접 설치하세요: https:
 name = "cargo-watch"
 check = "cargo watch --version"
 install = "cargo install cargo-watch"
+latest = "cargo search cargo-watch | head -1 | grep -oE '[0-9]+\\.[0-9]+\\.[0-9]+' | head -1"
+update = "cargo install cargo-watch"
 
 [cargo.sea-orm-cli]
 name = "sea-orm-cli"
 check = "sea-orm-cli --version"
 install = "cargo install sea-orm-cli"
+latest = "cargo search sea-orm-cli | head -1 | grep -oE '[0-9]+\\.[0-9]+\\.[0-9]+' | head -1"
+update = "cargo install sea-orm-cli"
