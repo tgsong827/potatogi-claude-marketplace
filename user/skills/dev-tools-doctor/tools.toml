@@ -17,11 +17,15 @@ description = "zshrc에 Homebrew PATH 설정 (Apple Silicon)"
 name = "pnpm"
 check = "pnpm --version"
 install = "brew install pnpm"
+latest = "brew info pnpm --json=v2 | jq -r '.formulae[0].versions.stable'"
+update = "brew upgrade pnpm"
 
 [package-manager.yarn]
 name = "Yarn"
 check = "yarn --version"
 install = "brew install yarn"
+latest = "brew info yarn --json=v2 | jq -r '.formulae[0].versions.stable'"
+update = "brew upgrade yarn"
 
 # =============================================================================
 # 2. Font
@@ -45,11 +49,15 @@ install = "brew install --cask font-d2coding-nerd-font"
 name = "Zsh"
 check = "zsh --version"
 install = "brew install zsh"
+latest = "brew info zsh --json=v2 | jq -r '.formulae[0].versions.stable'"
+update = "brew upgrade zsh"
 
 [shell.zsh-autosuggestions]
 name = "zsh-autosuggestions"
 check = "brew list zsh-autosuggestions &>/dev/null && echo \"zsh-autosuggestions $(brew info zsh-autosuggestions --json | grep -o '\"stable\":\"[^\"]*\"' | head -1 | cut -d'\"' -f4)\""
 install = "brew install zsh-autosuggestions"
+latest = "brew info zsh-autosuggestions --json=v2 | jq -r '.formulae[0].versions.stable'"
+update = "brew upgrade zsh-autosuggestions"
 
 [shell.zsh-autosuggestions.setup]
 commands = [
@@ -61,6 +69,8 @@ description = "zshrc에 autosuggestions 활성화"
 name = "zsh-syntax-highlighting"
 check = "brew list zsh-syntax-highlighting &>/dev/null && echo \"zsh-syntax-highlighting $(brew info zsh-syntax-highlighting --json | grep -o '\"stable\":\"[^\"]*\"' | head -1 | cut -d'\"' -f4)\""
 install = "brew install zsh-syntax-highlighting"
+latest = "brew info zsh-syntax-highlighting --json=v2 | jq -r '.formulae[0].versions.stable'"
+update = "brew upgrade zsh-syntax-highlighting"
 
 [shell.zsh-syntax-highlighting.setup]
 commands = [
@@ -72,6 +82,8 @@ description = "zshrc에 syntax-highlighting 활성화"
 name = "Starship"
 check = "starship --version"
 install = "brew install starship"
+latest = "brew info starship --json=v2 | jq -r '.formulae[0].versions.stable'"
+update = "brew upgrade starship"
 
 [shell.starship.setup]
 commands = [
@@ -88,6 +100,8 @@ description = "zshrc에 Starship 초기화 추가 및 nerd-font-symbols preset �
 name = "fnm"
 check = "fnm --version"
 install = "brew install fnm"
+latest = "brew info fnm --json=v2 | jq -r '.formulae[0].versions.stable'"
+update = "brew upgrade fnm"
 
 [runtime.fnm.setup]
 commands = [
@@ -120,6 +134,8 @@ description = "zshrc에 Cargo PATH 설정"
 name = "Python"
 check = "python3 --version"
 install = "brew install python"
+latest = "brew info python --json=v2 | jq -r '.formulae[0].versions.stable'"
+update = "brew upgrade python"
 
 # =============================================================================
 # 5. CLI
@@ -131,11 +147,15 @@ install = "brew install python"
 name = "GitHub CLI"
 check = "gh --version"
 install = "brew install gh"
+latest = "brew info gh --json=v2 | jq -r '.formulae[0].versions.stable'"
+update = "brew upgrade gh"
 
 [cli.direnv]
 name = "direnv"
 check = "direnv version"
 install = "brew install direnv"
+latest = "brew info direnv --json=v2 | jq -r '.formulae[0].versions.stable'"
+update = "brew upgrade direnv"
 
 [cli.direnv.setup]
 commands = [
@@ -147,11 +167,15 @@ description = "zshrc에 direnv hook 추가"
 name = "telnet"
 check = "command -v telnet &>/dev/null && echo \"telnet installed\""
 install = "brew install telnet"
+latest = "brew info telnet --json=v2 | jq -r '.formulae[0].versions.stable'"
+update = "brew upgrade telnet"
 
 [cli.coreutils]
 name = "coreutils"
 check = "brew list coreutils &>/dev/null && echo \"coreutils installed\""
 install = "brew install coreutils"
+latest = "brew info coreutils --json=v2 | jq -r '.formulae[0].versions.stable'"
+update = "brew upgrade coreutils"
 
 # -- infra --
 
@@ -159,16 +183,36 @@ install = "brew install coreutils"
 name = "AWS CLI"
 check = "aws --version"
 install = "brew install awscli"
+latest = "brew info awscli --json=v2 | jq -r '.formulae[0].versions.stable'"
+update = "brew upgrade awscli"
 
 [cli.kubectl]
 name = "kubectl"
 check = "kubectl version --client"
 install = "brew install kubectl"
+latest = "brew info kubectl --json=v2 | jq -r '.formulae[0].versions.stable'"
+update = "brew upgrade kubectl"
 
 [cli.kubectx]
 name = "kubectx"
 check = "kubectx --version"
 install = "brew install kubectx"
+latest = "brew info kubectx --json=v2 | jq -r '.formulae[0].versions.stable'"
+update = "brew upgrade kubectx"
+
+[cli.minikube]
+name = "minikube"
+check = "minikube version"
+install = "brew install minikube"
+latest = "brew info minikube --json=v2 | jq -r '.formulae[0].versions.stable'"
+update = "brew upgrade minikube"
+
+[cli.k9s]
+name = "k9s"
+check = "k9s version"
+install = "brew install k9s"
+latest = "brew info k9s --json=v2 | jq -r '.formulae[0].versions.stable'"
+update = "brew upgrade k9s"
 
 # -- static site --
 
@@ -176,6 +220,8 @@ install = "brew install kubectx"
 name = "Zola"
 check = "zola --version"
 install = "brew install zola"
+latest = "brew info zola --json=v2 | jq -r '.formulae[0].versions.stable'"
+update = "brew upgrade zola"
 
 # =============================================================================
 # 6. AI
@@ -254,6 +300,11 @@ name = "Redis Insight"
 check = "[ -d \"/Applications/Redis Insight.app\" ] && echo \"Redis Insight installed\""
 install = "brew install --cask redisinsight"
 
+[app.medis]
+name = "Medis"
+check = "[ -d \"/Applications/Medis.app\" ] && echo \"Medis installed\""
+install = "brew install --cask medis"
+
 # -- k8s --
 
 [app.lens]
@@ -267,6 +318,53 @@ install = "brew install --cask lens"
 name = "Tailscale"
 check = "tailscale --version"
 install = "brew install tailscale"
+latest = "brew info tailscale --json=v2 | jq -r '.formulae[0].versions.stable'"
+update = "brew upgrade tailscale"
+
+# -- utility --
+
+[app.rectangle]
+name = "Rectangle"
+check = "[ -d \"/Applications/Rectangle.app\" ] && echo \"Rectangle installed\""
+install = "brew install --cask rectangle"
+
+# -- browser --
+
+[app.google-chrome]
+name = "Google Chrome"
+check = "[ -d \"/Applications/Google Chrome.app\" ] && echo \"Google Chrome installed\""
+install = "brew install --cask google-chrome"
+
+# -- productivity --
+
+[app.notion]
+name = "Notion"
+check = "[ -d \"/Applications/Notion.app\" ] && echo \"Notion installed\""
+install = "brew install --cask notion"
+
+# -- communication --
+
+[app.slack]
+name = "Slack"
+check = "[ -d \"/Applications/Slack.app\" ] && echo \"Slack installed\""
+install = "brew install --cask slack"
+
+[app.discord]
+name = "Discord"
+check = "[ -d \"/Applications/Discord.app\" ] && echo \"Discord installed\""
+install = "brew install --cask discord"
+
+[app.telegram]
+name = "Telegram"
+check = "[ -d \"/Applications/Telegram.app\" ] && echo \"Telegram installed\""
+install = "brew install --cask telegram"
+
+# KakaoTalk은 Homebrew/cask에 없고 Mac App Store 전용이라 자동 설치하지 않는다.
+# install 명령은 실제 설치 대신 수동 설치 안내만 출력한다.
+[app.kakaotalk]
+name = "KakaoTalk"
+check = "[ -d \"/Applications/카카오톡.app\" ] && echo \"KakaoTalk installed\""
+install = "echo 'KakaoTalk은 Mac App Store에서 직접 설치하세요: https://apps.apple.com/app/id869223134 (App Store 검색: 카카오톡)'"
 
 # =============================================================================
 # 8. Cargo Dev Tools (Rust 의존)
@@ -276,11 +374,6 @@ install = "brew install tailscale"
 name = "cargo-watch"
 check = "cargo watch --version"
 install = "cargo install cargo-watch"
-
-[cargo.cargo-fleet]
-name = "cargo-fleet"
-check = "fleet --version"
-install = "cargo install fleet-rs"
 
 [cargo.sea-orm-cli]
 name = "sea-orm-cli"
