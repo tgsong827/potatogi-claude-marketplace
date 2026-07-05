@@ -35,11 +35,15 @@ update = "brew upgrade yarn"
 name = "MesloLGLDZ Nerd Font Mono"
 check = "brew list font-meslo-lg-nerd-font &>/dev/null && echo \"font-meslo-lg-nerd-font installed\""
 install = "brew install --cask font-meslo-lg-nerd-font"
+latest = "brew info --cask font-meslo-lg-nerd-font --json=v2 | jq -r '.casks[0].version'"
+update = "brew upgrade --cask font-meslo-lg-nerd-font"
 
 [font.d2coding-nerd-font]
 name = "D2CodingLigature Nerd Font Mono"
 check = "brew list font-d2coding-nerd-font &>/dev/null && echo \"font-d2coding-nerd-font installed\""
 install = "brew install --cask font-d2coding-nerd-font"
+latest = "brew info --cask font-d2coding-nerd-font --json=v2 | jq -r '.casks[0].version'"
+update = "brew upgrade --cask font-d2coding-nerd-font"
 
 # =============================================================================
 # 3. Shell
@@ -257,6 +261,8 @@ install = "npm install -g @agentmemory/agentmemory"
 name = "Zed"
 check = "[ -d \"/Applications/Zed.app\" ] && echo \"Zed installed\""
 install = "brew install --cask zed"
+latest = "brew info --cask zed --json=v2 | jq -r '.casks[0].version'"
+update = "brew upgrade --cask zed"
 
 # -- terminal --
 
@@ -264,6 +270,8 @@ install = "brew install --cask zed"
 name = "cmux"
 check = "[ -d \"/Applications/cmux.app\" ] && echo \"cmux installed\""
 install = "brew install --cask cmux"
+latest = "brew info --cask cmux --json=v2 | jq -r '.casks[0].version'"
+update = "brew upgrade --cask cmux"
 
 [app.cmux.setup]
 commands = [
@@ -280,6 +288,8 @@ description = "cmux는 Ghostty 기반이며 ~/Library/Application Support/com.cm
 name = "Docker"
 check = "docker --version"
 install = "brew install --cask docker"
+latest = "brew info --cask docker --json=v2 | jq -r '.casks[0].version'"
+update = "brew upgrade --cask docker"
 
 # -- api --
 
@@ -287,6 +297,8 @@ install = "brew install --cask docker"
 name = "Postman"
 check = "[ -d \"/Applications/Postman.app\" ] && echo \"Postman installed\""
 install = "brew install --cask postman"
+latest = "brew info --cask postman --json=v2 | jq -r '.casks[0].version'"
+update = "brew upgrade --cask postman"
 
 # -- database --
 
@@ -294,16 +306,22 @@ install = "brew install --cask postman"
 name = "DBeaver"
 check = "[ -d \"/Applications/DBeaver.app\" ] && echo \"DBeaver installed\""
 install = "brew install --cask dbeaver-community"
+latest = "brew info --cask dbeaver-community --json=v2 | jq -r '.casks[0].version'"
+update = "brew upgrade --cask dbeaver-community"
 
 [app.redis-insight]
 name = "Redis Insight"
 check = "[ -d \"/Applications/Redis Insight.app\" ] && echo \"Redis Insight installed\""
 install = "brew install --cask redisinsight"
+latest = "brew info --cask redisinsight --json=v2 | jq -r '.casks[0].version'"
+update = "brew upgrade --cask redisinsight"
 
 [app.medis]
 name = "Medis"
 check = "[ -d \"/Applications/Medis.app\" ] && echo \"Medis installed\""
 install = "brew install --cask medis"
+latest = "brew info --cask medis --json=v2 | jq -r '.casks[0].version'"
+update = "brew upgrade --cask medis"
 
 # -- k8s --
 
@@ -311,6 +329,8 @@ install = "brew install --cask medis"
 name = "Lens"
 check = "[ -d \"/Applications/Lens.app\" ] && echo \"Lens installed\""
 install = "brew install --cask lens"
+latest = "brew info --cask lens --json=v2 | jq -r '.casks[0].version'"
+update = "brew upgrade --cask lens"
 
 # -- network --
 
@@ -327,6 +347,8 @@ update = "brew upgrade tailscale"
 name = "Rectangle"
 check = "[ -d \"/Applications/Rectangle.app\" ] && echo \"Rectangle installed\""
 install = "brew install --cask rectangle"
+latest = "brew info --cask rectangle --json=v2 | jq -r '.casks[0].version'"
+update = "brew upgrade --cask rectangle"
 
 # -- browser --
 
@@ -334,6 +356,8 @@ install = "brew install --cask rectangle"
 name = "Google Chrome"
 check = "[ -d \"/Applications/Google Chrome.app\" ] && echo \"Google Chrome installed\""
 install = "brew install --cask google-chrome"
+latest = "brew info --cask google-chrome --json=v2 | jq -r '.casks[0].version'"
+update = "brew upgrade --cask google-chrome"
 
 # -- productivity --
 
@@ -341,6 +365,8 @@ install = "brew install --cask google-chrome"
 name = "Notion"
 check = "[ -d \"/Applications/Notion.app\" ] && echo \"Notion installed\""
 install = "brew install --cask notion"
+latest = "brew info --cask notion --json=v2 | jq -r '.casks[0].version'"
+update = "brew upgrade --cask notion"
 
 # -- communication --
 
@@ -348,16 +374,22 @@ install = "brew install --cask notion"
 name = "Slack"
 check = "[ -d \"/Applications/Slack.app\" ] && echo \"Slack installed\""
 install = "brew install --cask slack"
+latest = "brew info --cask slack --json=v2 | jq -r '.casks[0].version'"
+update = "brew upgrade --cask slack"
 
 [app.discord]
 name = "Discord"
 check = "[ -d \"/Applications/Discord.app\" ] && echo \"Discord installed\""
 install = "brew install --cask discord"
+latest = "brew info --cask discord --json=v2 | jq -r '.casks[0].version'"
+update = "brew upgrade --cask discord"
 
 [app.telegram]
 name = "Telegram"
 check = "[ -d \"/Applications/Telegram.app\" ] && echo \"Telegram installed\""
 install = "brew install --cask telegram"
+latest = "brew info --cask telegram --json=v2 | jq -r '.casks[0].version'"
+update = "brew upgrade --cask telegram"
 
 # KakaoTalk은 Homebrew/cask에 없고 Mac App Store 전용이라 자동 설치하지 않는다.
 # install 명령은 실제 설치 대신 수동 설치 안내만 출력한다.
