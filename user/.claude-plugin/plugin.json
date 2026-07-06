@@ -1,7 +1,7 @@
 {
   "name": "potatogi-plugin-user",
   "description": "Potatogi user scope plugin for Claude",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "author": {
     "name": "potatogi"
   }
