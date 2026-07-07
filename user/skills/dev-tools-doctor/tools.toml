@@ -429,3 +429,10 @@ check = "sea-orm-cli --version"
 install = "cargo install sea-orm-cli"
 latest = "cargo search sea-orm-cli | head -1 | grep -oE '[0-9]+\\.[0-9]+\\.[0-9]+' | head -1"
 update = "cargo install sea-orm-cli"
+
+[cargo.cship]
+name = "cship"
+check = "cship --version"
+install = "cargo install cship"
+latest = "cargo search cship | head -1 | grep -oE '[0-9]+\\.[0-9]+\\.[0-9]+' | head -1"
+update = "cargo install cship"
