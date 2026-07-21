@@ -1,7 +1,7 @@
 {
   "name": "potatogi-plugin-backend",
   "description": "Potatogi project scope backend plugin for Claude",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": {
     "name": "potatogi"
   }
